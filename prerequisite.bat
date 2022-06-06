@@ -39,6 +39,7 @@ goto default
 
 :badger
     echo Initializing Badger DB ...
+    if not exist %DBPATH%\badger\ ( mkdir %DBPATH%\badger\ )
     cd %DBPATH%\badger\
     set DB_PATH=data\
     set HTTP_HOST=%DBHOST%:%DBPORT%
@@ -47,6 +48,7 @@ goto default
 
 :bolt
     echo Initializing Bolt DB ...
+    if not exist %DBPATH%\bolt\ ( mkdir %DBPATH%\bolt\ )
     cd %DBPATH%\bolt\
     set DATABASE_PATH=bolt.db
     set SERVER_PORT=%DBPORT%
@@ -55,6 +57,7 @@ goto default
 
 :skytable
     echo Initializing Skytable ...
+    if not exist %DBPATH%\skytable\ ( mkdir %DBPATH%\skytable\ )
     cd %DBPATH%\skytable\
     skyd --host %DBHOST% --port %DBPORT%
     goto end
