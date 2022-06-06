@@ -10,7 +10,8 @@ DBPORT=6969
 case $FLAG in
 
   '-h' | '--help')
-    echo "
+    echo "Prerequisite is a CLI tool to initialize selected DB
+
  Options:
   -h --help         Show help options
   -v --badger       Run badgerdb via vxdb

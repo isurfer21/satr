@@ -4,6 +4,7 @@
   "description": "Generic REST API for session storage",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,23 @@
   },
   "homepage": "https://github.com/isurfer21/satr#readme",
   "dependencies": {
-    "fastify": "^3.29.0"
+    "axios": "^0.27.2",
+    "fastify": "^3.29.0",
+    "fastify-static": "^4.7.0"
+  },
+  "peerDependencies": {
+    "@vercel/ncc": "0.33.3",
+    "pkg": "5.5.2"
+  },
+  "pkg": {
+    "scripts": "index.js",
+    "assets": [],
+    "targets": [
+      "node16-win-x64"
+    ],
+    "outputPath": "bin"
+  },
+  "bin": {
+    "satr": "index.js"
   }
 }
