@@ -12,5 +12,10 @@
         "algorithm": "aes-128-cbc",
         "iv": "yellow_savanna:)",
         "key": "sahara_desert:-/"
+    },
+    "account": {
+    	"username": "johndoe",
+    	"password": "p@sSw0r6",
+    	"secretHash": "00e5fcf2a17fa1774974c2019cdfdcf9"	
     }
 }

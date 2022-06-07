@@ -19,22 +19,27 @@ class Authenticator {
                     let retrievedData = endec.decrypt(request.headers.subscriptionkey);
                     payload = JSON.parse(retrievedData);
                 } catch (err) {
-                    reply.code(401).send(new Erratum("Invalid Subscription Key", this.portion));
+                    reply.code(401).send(new Erratum("Invalid subscription key", this.portion));
                 }
-                let authStatus;
                 if (!!payload && !!payload.expiry && !!payload.bucket) {
                     let today = new Date(),
                         expiry = new Date(payload.expiry);
                     if (expiry > today) {
                         request.params.bucket = payload.bucket;
                     } else {
-                        reply.code(401).send(new Erratum("Expired Subscription Key", this.portion));
+                        reply.code(401).send(new Erratum("Expired subscription key", this.portion));
                     }
                 } else {
-                    reply.code(401).send(new Erratum("Inapt Subscription Key", this.portion));
+                    reply.code(401).send(new Erratum("Inapt subscription key", this.portion));
                 }
             } else {
-                reply.code(401).send(new Erratum("Missing Subscription Key", this.portion));
+                reply.code(401).send(new Erratum("Missing subscription key in request header", this.portion));
+            }
+        } else {
+            if (request.headers && request.headers.sourcechannel) {
+                request.params.bucket = request.headers.sourcechannel;
+            } else {
+                reply.code(401).send(new Erratum("Missing source channel in request header", this.portion));
             }
         }
     }

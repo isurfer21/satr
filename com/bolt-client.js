@@ -1,12 +1,13 @@
 const axios = require('axios');
+const model = require('./model');
 const Endec = require('./endec');
 const Erratum = require('./erratum');
 
 class BoltClient {
-    constructor(config, request) {
-        console.log('BoltClient::constructor', config);
+    constructor(request) {
+        // console.log('BoltClient::constructor', config);
         this.portion = 'BoltClient';
-        this.config = config;
+        this.config = model.config.database;
         this.request = request;
         this.baseUrl = this.getBaseUrl();
         this.bucketUrl = this.getBucketUrl();

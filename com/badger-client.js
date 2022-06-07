@@ -1,12 +1,13 @@
 const axios = require('axios');
+const model = require('./model');
 const Endec = require('./endec');
 const Erratum = require('./erratum');
 
 class BadgerClient {
-    constructor(config, request) {
-        console.log('BadgerClient::constructor', config);
+    constructor(request) {
+        // console.log('BadgerClient::constructor', config);
         this.portion = 'BadgerClient';
-        this.config = config;
+        this.config = model.config.database;
         this.request = request;
         this.baseUrl = this.getBaseUrl();
         this.bucketUrl = this.getBucketUrl();

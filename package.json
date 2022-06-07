@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/isurfer21/satr#readme",
   "dependencies": {
+    "@fastify/static": "^5.0.2",
     "axios": "^0.27.2",
-    "fastify": "^3.29.0",
-    "fastify-static": "^4.7.0"
+    "fastify": "^3.29.0"
   },
   "peerDependencies": {
     "@vercel/ncc": "0.33.3",
