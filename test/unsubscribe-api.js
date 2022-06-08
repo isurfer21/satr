@@ -1,20 +1,22 @@
 const axios = require('axios');
+const crypto = require('crypto');
 
 async function main() {
 
-    let uid = (new Date()).valueOf();
+    const username = 'johndoe', 
+        password = 'p@sSw0r6';
+
+    let secretHash = crypto.createHash('md5').update(password).digest('hex');    
+    let bearerToken = Buffer.from([username, secretHash].join('|'), 'utf8').toString('base64');
 
     const config = {
-        method: 'post',
-        url: `http://127.0.0.1:3000/session/S${uid}`,
+        method: 'delete',
+        url: 'http://127.0.0.1:3000/unsubscribe/trial2',
         headers: {
             'Content-Type': 'application/json',
-            'subscriptionkey': 'aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0Dl0r5Eh5F8sSzAG1aPpDxVGA=='
+            'Authorization': `Bearer ${bearerToken}`
         },
-        data: {
-            'username': 'John Doe',
-            'email': 'john.doe@email.com'
-        }
+        data: {}
     };
 
     try {

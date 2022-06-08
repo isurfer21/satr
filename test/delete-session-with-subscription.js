@@ -5,7 +5,7 @@ async function main() {
     let uid = (new Date()).valueOf();
 
     const config = {
-        method: 'post',
+        method: 'delete',
         url: `http://127.0.0.1:3000/session/S${uid}`,
         headers: {
             'Content-Type': 'application/json',

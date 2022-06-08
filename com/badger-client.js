@@ -10,20 +10,30 @@ class BadgerClient {
         this.config = model.config.database;
         this.request = request;
         this.baseUrl = this.getBaseUrl();
-        this.bucketUrl = this.getBucketUrl();
-        this.keyUrl = this.getKeyUrl();
     }
 
     getBaseUrl() {
         const protocol = (this.config.ssl) ? 'https' : 'http';
-        const baseUrl = `${protocol}://${this.config.host}:${this.config.port}`;
+        return `${protocol}://${this.config.host}:${this.config.port}`;
         return baseUrl;
     }
     getBucketUrl() {
-        return `${this.baseUrl}/${this.request.params.bucket}`;
+        if (!!this.request.params.bucket) {
+            return `${this.baseUrl}/${this.request.params.bucket}`;
+        } else {
+            throw new Error('Missing bucket');
+        }
     }
     getKeyUrl() {
-        return `${this.baseUrl}/${this.request.params.bucket}/${this.request.params.key}`;
+        if (!!this.request.params.bucket) {
+            if (!!this.request.params.key) {
+                return `${this.baseUrl}/${this.request.params.bucket}/${this.request.params.key}`;
+            } else {
+                throw new Error('Missing bucket');
+            }
+        } else {
+            throw new Error('Missing key');
+        }
     }
 
     async query(link, mode) {
@@ -37,7 +47,7 @@ class BadgerClient {
         };
         let response;
         try { response = await axios(config); } catch (err) {
-            reply.code(500).send(new Erratum(err, this.portion));
+            throw new Error(err);
         }
         const payload = {
             status: 'ok',
@@ -47,23 +57,59 @@ class BadgerClient {
     }
 
     async createBucket() {
-        return await this.query(this.bucketUrl, 'post');
+        try {
+            let bucketUrl = this.getBucketUrl();
+            console.log('BadgerClient::createBucket, bucketUrl:', bucketUrl);
+            return await this.query(bucketUrl, 'post');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
     async deleteBucket() {
-        return await this.query(this.bucketUrl, 'delete');
+        try {
+            let bucketUrl = this.getBucketUrl();
+            console.log('BadgerClient::deleteBucket, bucketUrl:', bucketUrl);
+            return await this.query(bucketUrl, 'delete');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
 
     async createKey() {
-        return await this.query(this.keyUrl, 'put');
+        try {
+            let keyUrl = this.getKeyUrl();
+            console.log('BadgerClient::createKey, keyUrl:', keyUrl);
+            return await this.query(keyUrl, 'put');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
     async readKey() {
-        return await this.query(this.keyUrl, 'get');
+        try {
+            let keyUrl = this.getKeyUrl();
+            console.log('BadgerClient::readKey, keyUrl:', keyUrl);
+            return await this.query(keyUrl, 'get');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
     async updateKey() {
-        return await this.query(this.keyUrl, 'put');
+        try {
+            let keyUrl = this.getKeyUrl();
+            console.log('BadgerClient::updateKey, keyUrl:', keyUrl);
+            return await this.query(keyUrl, 'put');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
     async deleteKey() {
-        return await this.query(this.keyUrl, 'delete');
+        try {
+            let keyUrl = this.getKeyUrl();
+            console.log('BadgerClient::deleteKey, keyUrl:', keyUrl);
+            return await this.query(keyUrl, 'delete');
+        } catch (err) {
+            throw new Erratum(err.message, this.portion);
+        }
     }
 }
 

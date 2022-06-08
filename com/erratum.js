@@ -18,7 +18,7 @@ class Erratum {
 		if (!!genre) {
 			error.type = genre;
 		}
-		console.error(error);
+		console.error('Erratum', error);
 		return error;
 	}
 }

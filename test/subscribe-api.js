@@ -10,13 +10,15 @@ async function main() {
     let bearerToken = Buffer.from([username, secretHash].join('|'), 'utf8').toString('base64');
 
     const config = {
-        method: 'get',
-        url: 'http://127.0.0.1:3000/subscribe/trial',
+        method: 'post',
+        url: 'http://127.0.0.1:3000/subscribe/trial2',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${bearerToken}`
         },
-        data: {}
+        data: {
+            expiry: '2023-12-31'
+        }
     };
 
     try {

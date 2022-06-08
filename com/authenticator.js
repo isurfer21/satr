@@ -12,7 +12,7 @@ class Authenticator {
     async ratify(request, reply) {
         // console.log('Authenticator::ratify, \nReqHeader:', request.headers, '\nReqBody:', request.body);
         if (model.config.cipher.enabled) {
-            if (request.headers && request.headers.subscriptionkey) {
+            if (!!request.headers && !!request.headers.subscriptionkey) {
                 let payload;
                 try {
                     const endec = new Endec(model.config.cipher);
@@ -36,7 +36,7 @@ class Authenticator {
                 reply.code(401).send(new Erratum("Missing subscription key in request header", this.portion));
             }
         } else {
-            if (request.headers && request.headers.sourcechannel) {
+            if (!!request.headers && !!request.headers.sourcechannel) {
                 request.params.bucket = request.headers.sourcechannel;
             } else {
                 reply.code(401).send(new Erratum("Missing source channel in request header", this.portion));

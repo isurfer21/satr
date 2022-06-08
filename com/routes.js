@@ -16,7 +16,8 @@ class Routes {
 
     async initialize(fastify, options) {
         fastify.get('/live', this.isAlive);
-        fastify.get('/subscribe/:bucket', Controller.subscribe);
+        fastify.post('/subscribe/:bucket', Controller.subscribe);
+        fastify.delete('/unsubscribe/:bucket', Controller.unsubscribe);
         fastify.post('/session/:key', { preHandler: Authenticator.ratify }, Controller.createSession);
         fastify.get('/session/:key', { preHandler: Authenticator.ratify }, Controller.readSession);
         fastify.put('/session/:key', { preHandler: Authenticator.ratify }, Controller.updateSession);

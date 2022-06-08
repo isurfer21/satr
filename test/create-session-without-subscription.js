@@ -9,7 +9,7 @@ async function main() {
         url: `http://127.0.0.1:3000/session/S${uid}`,
         headers: {
             'Content-Type': 'application/json',
-            'sourceChannel': 'trial'
+            'sourcechannel': 'trial'
         },
         data: {
             'username': 'John Doe',
