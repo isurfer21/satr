@@ -17,7 +17,7 @@ class Controller {
         this.deleteSession = this.deleteSession.bind(this);
     }
     async subscribe(request, reply) {
-        console.log('Controller::subscribe, \nReqHeader:', request.headers, '\nReqBody:', request.body, '\nReqParams:', request.params);
+        // console.log('Controller::subscribe, \nReqHeader:', request.headers, '\nReqBody:', request.body, '\nReqParams:', request.params);
         const endec = new Endec(model.config.cipher);
         let isBearerTokenValid,
             authBearer = new AuthBearer(model.config.account);
@@ -29,7 +29,7 @@ class Controller {
             if (!!request.body.expiry) {
                 let expiry;
                 try { expiry = new Date(request.body.expiry); } catch (err) {
-                    reply.code(500).send(new Erratum(err.message, this.portion));
+                    reply.code(403).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 if (expiry instanceof Date && !isNaN(expiry)) {
@@ -47,34 +47,33 @@ class Controller {
                         case 'badger':
                             let badgerClient = new BadgerClient(request);
                             try { retort = await badgerClient.createBucket(); } catch (err) {
-                                reply.code(401).send(new Erratum(err.message, this.portion));
+                                reply.code(400).send(new Erratum(err.message, this.portion));
                                 return;
                             }
                             break;
                         case 'bolt':
                             let boltClient = new BoltClient(request);
                             try { retort = await boltClient.createBucket(); } catch (err) {
-                                reply.code(401).send(new Erratum(err.message, this.portion));
+                                reply.code(400).send(new Erratum(err.message, this.portion));
                                 return;
                             }
                             break;
                         case 'skytable':
                             break;
                         default:
-                            reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                            reply.code(501).send(new Erratum('Unadopted database', this.portion));
                             return;
                     }
                     if (!!retort) {
                         let payload = {
                             status: retort.status,
-                            statusCode: retort.result.status,
-                            statusText: retort.result.statusText,
+                            statusText: retort.statusText,
                             subscriptionKey: concealedSubscriptionKey,
-                            data: retort.result.data
+                            data: retort.data
                         };
-                        reply.code(retort.result.status).send(payload);
+                        reply.code(retort.status).send(payload);
                     } else {
-                        reply.code(401).send(new Erratum('No response from database', this.portion));
+                        reply.code(504).send(new Erratum('No response from database', this.portion));
                         return;
                     }
                 } else {
@@ -96,41 +95,38 @@ class Controller {
             reply.code(401).send(new Erratum(err.message, this.portion));
             return;
         }
-        console.log(this.portion)
         if (!!isBearerTokenValid) {
             let retort;
             switch (model.config.database.adopt) {
                 case 'badger':
                     let badgerClient = new BadgerClient(request);
                     try { retort = await badgerClient.deleteBucket(); } catch (err) {
-                        reply.code(401).send(new Erratum(err.message, this.portion));
+                        reply.code(400).send(new Erratum(err.message, this.portion));
                         return;
                     }
                     break;
                 case 'bolt':
                     let boltClient = new BoltClient(request);
                     try { retort = await boltClient.deleteBucket(); } catch (err) {
-                        reply.code(401).send(new Erratum(err.message, this.portion));
+                        reply.code(400).send(new Erratum(err.message, this.portion));
                         return;
                     }
                     break;
                 case 'skytable':
                     break;
                 default:
-                    reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                    reply.code(501).send(new Erratum('Unadopted database', this.portion));
                     return;
             }
             if (!!retort) {
                 let payload = {
                     status: retort.status,
-                    statusCode: retort.result.status,
-                    statusText: retort.result.statusText,
-                    subscriptionKey: concealedSubscriptionKey,
-                    data: retort.result.data
+                    statusText: retort.statusText,
+                    data: retort.data
                 };
-                reply.code(retort.result.status).send(payload);
+                reply.code(retort.status).send(payload);
             } else {
-                reply.code(401).send(new Erratum('No response from database', this.portion));
+                reply.code(504).send(new Erratum('No response from database', this.portion));
                 return;
             }
         }
@@ -142,150 +138,142 @@ class Controller {
             case 'badger':
                 let badgerClient = new BadgerClient(request);
                 try { retort = await badgerClient.createKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'bolt':
                 let boltClient = new BoltClient(request);
                 try { retort = await boltClient.createKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'skytable':
                 break;
             default:
-                reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                reply.code(501).send(new Erratum('Unadopted database', this.portion));
                 return;
         }
         if (!!retort) {
             let payload = {
                 status: retort.status,
-                statusCode: retort.result.status,
-                statusText: retort.result.statusText,
-                subscriptionKey: concealedSubscriptionKey,
-                data: retort.result.data
+                statusText: retort.statusText,
+                data: retort.data
             };
-            reply.code(retort.result.status).send(payload);
+            reply.code(retort.status).send(payload);
         } else {
-            reply.code(401).send(new Erratum('No response from database', this.portion));
+            reply.code(504).send(new Erratum('No response from database', this.portion));
             return;
         }
     }
     async readSession(request, reply) {
-        console.log('Controller::readSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
+        // console.log('Controller::readSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
         let retort;
         switch (model.config.database.adopt) {
             case 'badger':
                 let badgerClient = new BadgerClient(request);
                 try { retort = await badgerClient.readKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'bolt':
                 let boltClient = new BoltClient(request);
                 try { retort = await boltClient.readKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'skytable':
                 break;
             default:
-                reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                reply.code(501).send(new Erratum('Unadopted database', this.portion));
                 return;
         }
         if (!!retort) {
             let payload = {
                 status: retort.status,
-                statusCode: retort.result.status,
-                statusText: retort.result.statusText,
-                subscriptionKey: concealedSubscriptionKey,
-                data: retort.result.data
+                statusText: retort.statusText,
+                data: retort.data
             };
-            reply.code(retort.result.status).send(payload);
+            reply.code(retort.status).send(payload);
         } else {
-            reply.code(401).send(new Erratum('No response from database', this.portion));
+            reply.code(504).send(new Erratum('No response from database', this.portion));
             return;
         }
     }
     async updateSession(request, reply) {
-        console.log('Controller::updateSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
+        // console.log('Controller::updateSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
         let retort;
         switch (model.config.database.adopt) {
             case 'badger':
                 let badgerClient = new BadgerClient(request);
                 try { retort = await badgerClient.updateKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'bolt':
                 let boltClient = new BoltClient(request);
                 try { retort = await boltClient.updateKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'skytable':
                 break;
             default:
-                reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                reply.code(501).send(new Erratum('Unadopted database', this.portion));
                 return;
         }
         if (!!retort) {
             let payload = {
                 status: retort.status,
-                statusCode: retort.result.status,
-                statusText: retort.result.statusText,
-                subscriptionKey: concealedSubscriptionKey,
-                data: retort.result.data
+                statusText: retort.statusText,
+                data: retort.data
             };
-            reply.code(retort.result.status).send(payload);
+            reply.code(retort.status).send(payload);
         } else {
-            reply.code(401).send(new Erratum('No response from database', this.portion));
+            reply.code(504).send(new Erratum('No response from database', this.portion));
             return;
         }
     }
     async deleteSession(request, reply) {
-        console.log('Controller::deleteSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
+        // console.log('Controller::deleteSession, \nReqHeader:', request.headers, '\nReqBody:', request.body);
         let retort;
         switch (model.config.database.adopt) {
             case 'badger':
                 let badgerClient = new BadgerClient(request);
                 try { retort = await badgerClient.deleteKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'bolt':
                 let boltClient = new BoltClient(request);
                 try { retort = await boltClient.deleteKey(); } catch (err) {
-                    reply.code(401).send(new Erratum(err.message, this.portion));
+                    reply.code(400).send(new Erratum(err.message, this.portion));
                     return;
                 }
                 break;
             case 'skytable':
                 break;
             default:
-                reply.code(500).send(new Erratum('Unadopted database', this.portion));
+                reply.code(501).send(new Erratum('Unadopted database', this.portion));
                 return;
         }
         if (!!retort) {
             let payload = {
                 status: retort.status,
-                statusCode: retort.result.status,
-                statusText: retort.result.statusText,
-                subscriptionKey: concealedSubscriptionKey,
-                data: retort.result.data
+                statusText: retort.statusText,
+                data: retort.data
             };
-            reply.code(retort.result.status).send(payload);
+            reply.code(retort.status).send(payload);
         } else {
-            reply.code(401).send(new Erratum('No response from database', this.portion));
+            reply.code(504).send(new Erratum('No response from database', this.portion));
             return;
-        }S
+        }
     }
 }
 

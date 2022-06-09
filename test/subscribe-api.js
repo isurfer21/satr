@@ -10,8 +10,8 @@ async function main() {
     let bearerToken = Buffer.from([username, secretHash].join('|'), 'utf8').toString('base64');
 
     const config = {
-        method: 'post',
-        url: 'http://127.0.0.1:3000/subscribe/trial2',
+        method: 'POST',
+        url: 'http://127.0.0.1:3000/subscribe/trial',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${bearerToken}`

@@ -33,13 +33,13 @@ class Authenticator {
                     reply.code(401).send(new Erratum("Inapt subscription key", this.portion));
                 }
             } else {
-                reply.code(401).send(new Erratum("Missing subscription key in request header", this.portion));
+                reply.code(417).send(new Erratum("Missing subscription key in request header", this.portion));
             }
         } else {
             if (!!request.headers && !!request.headers.sourcechannel) {
                 request.params.bucket = request.headers.sourcechannel;
             } else {
-                reply.code(401).send(new Erratum("Missing source channel in request header", this.portion));
+                reply.code(417).send(new Erratum("Missing source channel in request header", this.portion));
             }
         }
     }

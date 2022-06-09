@@ -10,8 +10,8 @@ async function main() {
     let bearerToken = Buffer.from([username, secretHash].join('|'), 'utf8').toString('base64');
 
     const config = {
-        method: 'delete',
-        url: 'http://127.0.0.1:3000/unsubscribe/trial2',
+        method: 'DELETE',
+        url: 'http://127.0.0.1:3000/unsubscribe/trial',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${bearerToken}`

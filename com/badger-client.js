@@ -15,7 +15,6 @@ class BadgerClient {
     getBaseUrl() {
         const protocol = (this.config.ssl) ? 'https' : 'http';
         return `${protocol}://${this.config.host}:${this.config.port}`;
-        return baseUrl;
     }
     getBucketUrl() {
         if (!!this.request.params.bucket) {
@@ -36,79 +35,59 @@ class BadgerClient {
         }
     }
 
-    async query(link, mode) {
-        const config = {
-            method: mode,
-            url: link,
-            headers: {
-                ...this.request.headers
-            },
-            data: this.request.body
-        };
-        let response;
-        try { response = await axios(config); } catch (err) {
-            throw new Error(err);
-        }
-        const payload = {
-            status: 'ok',
-            result: response
-        };
-        return payload;
-    }
-
     async createBucket() {
         try {
             let bucketUrl = this.getBucketUrl();
-            console.log('BadgerClient::createBucket, bucketUrl:', bucketUrl);
-            return await this.query(bucketUrl, 'post');
+            return await axios.post(bucketUrl);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
     async deleteBucket() {
         try {
             let bucketUrl = this.getBucketUrl();
-            console.log('BadgerClient::deleteBucket, bucketUrl:', bucketUrl);
-            return await this.query(bucketUrl, 'delete');
+            return await axios.delete(bucketUrl);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
 
     async createKey() {
         try {
             let keyUrl = this.getKeyUrl();
-            console.log('BadgerClient::createKey, keyUrl:', keyUrl);
-            return await this.query(keyUrl, 'put');
+            return await axios.put(keyUrl, this.request.body);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
     async readKey() {
         try {
             let keyUrl = this.getKeyUrl();
-            console.log('BadgerClient::readKey, keyUrl:', keyUrl);
-            return await this.query(keyUrl, 'get');
+            return await axios.get(keyUrl);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
     async updateKey() {
         try {
             let keyUrl = this.getKeyUrl();
-            console.log('BadgerClient::updateKey, keyUrl:', keyUrl);
-            return await this.query(keyUrl, 'put');
+            return await axios.put(keyUrl, this.request.body);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
     async deleteKey() {
         try {
             let keyUrl = this.getKeyUrl();
-            console.log('BadgerClient::deleteKey, keyUrl:', keyUrl);
-            return await this.query(keyUrl, 'delete');
+            return await axios.delete(keyUrl);
         } catch (err) {
-            throw new Erratum(err.message, this.portion);
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
         }
     }
 }

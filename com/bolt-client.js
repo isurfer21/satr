@@ -10,63 +10,103 @@ class BoltClient {
         this.config = model.config.database;
         this.request = request;
         this.baseUrl = this.getBaseUrl();
-        this.bucketUrl = this.getBucketUrl();
-        this.keyUrl = this.getKeyUrl();
     }
 
     getBaseUrl() {
         const protocol = (this.config.ssl) ? 'https' : 'http';
-        const baseUrl = `${protocol}://${this.config.host}:${this.config.port}`;
-        return baseUrl;
+        return `${protocol}://${this.config.host}:${this.config.port}`;
     }
     getBucketUrl() {
-        return `${this.baseUrl}/v1/buckets/${this.request.params.bucket}`;
+        if (!!this.request.params.bucket) {
+            return `${this.baseUrl}/v1/buckets/${this.request.params.bucket}`;
+        } else {
+            throw new Error('Missing bucket');
+        }
     }
     getKeyUrl() {
-        return `${this.baseUrl}/v1/buckets/${this.request.params.bucket}/keys/${this.request.params.key}`;
-    }
-
-    async query(link, mode) {
-        const config = {
-            method: mode,
-            url: link,
-            headers: {
-                'Content-Type': 'application/json',
-                ...this.request.headers
-            },
-            data: {
-                data: this.request.body
+        if (!!this.request.params.bucket) {
+            if (!!this.request.params.key) {
+                return `${this.baseUrl}/v1/buckets/${this.request.params.bucket}/keys/${this.request.params.key}`;
+            } else {
+                throw new Error('Missing bucket');
             }
-        };
-        let response;
-        try { response = await axios(config); } catch (err) {
-            reply.code(500).send(new Erratum(err, this.portion));
+        } else {
+            throw new Error('Missing key');
         }
-        const payload = {
-            status: 'ok',
-            result: response
-        };
-        return payload;
     }
 
     async createBucket() {
-        return await this.query(this.bucketUrl, 'post');
+        try {
+            let bucketUrl = this.getBucketUrl();
+            return await axios.post(bucketUrl);
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
     async deleteBucket() {
-        return await this.query(this.bucketUrl, 'delete');
+        try {
+            let bucketUrl = this.getBucketUrl();
+            return await axios.delete(bucketUrl);
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
 
     async createKey() {
-        return await this.query(this.keyUrl, 'post');
+        try {
+            let keyUrl = this.getKeyUrl();
+            return await axios.post(keyUrl, {
+                data: JSON.stringify(this.request.body)
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
     async readKey() {
-        return await this.query(this.keyUrl, 'get');
+        try {
+            let keyUrl = this.getKeyUrl();
+            let result = await axios.get(keyUrl);
+            if (!!result && result.status == 200) {
+                if (!!result.data && !!result.data.data) {
+                    result.data = JSON.parse(result.data.data);
+                }
+            }
+            return result;
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
     async updateKey() {
-        return await this.query(this.keyUrl, 'post');
+        try {
+            let keyUrl = this.getKeyUrl();
+            return await axios.post(keyUrl, {
+                data: JSON.stringify(this.request.body)
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
     async deleteKey() {
-        return await this.query(this.keyUrl, 'delete');
+        try {
+            let keyUrl = this.getKeyUrl();
+            return await axios.delete(keyUrl);
+        } catch (err) {
+            if (!!err.response) return err.response;
+            throw new Erratum(err, this.portion);
+        }
     }
 }
 

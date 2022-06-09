@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "watch": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,8 @@
   "dependencies": {
     "@fastify/static": "^5.0.2",
     "axios": "^0.27.2",
-    "fastify": "^3.29.0"
+    "fastify": "^3.29.0",
+    "nodemon": "^2.0.16"
   },
   "peerDependencies": {
     "@vercel/ncc": "0.33.3",
