@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "9f5cebc4-7886-4ee3-9779-8717040dee89",
+		"name": "Satr",
+		"description": "It is REST based API to manage session in KV-Store DB like Badger, BoltDB & SkyTable.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"expiry\": \"2023-12-31\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/subscribe/trial3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"subscribe",
+						"trial3"
+					]
+				},
+				"description": "Create a new bucket."
+			},
+			"response": [
+				{
+					"name": "Subscribe",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"expiry\": \"2023-12-31\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/subscribe/trial3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"subscribe",
+								"trial3"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "156"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:15:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 201,\n    \"statusText\": \"Created\",\n    \"subscriptionKey\": \"aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==\",\n    \"data\": \"\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Unsubscribe",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/unsubscribe/trial3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"unsubscribe",
+						"trial3"
+					]
+				},
+				"description": "Delete a bucket.\n\n_**Note**: It is not available for Badger DB_."
+			},
+			"response": [
+				{
+					"name": "Unsubscribe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/unsubscribe/trial3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"unsubscribe",
+								"trial3"
+							]
+						}
+					},
+					"status": "Method Not Allowed",
+					"code": 405,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "58"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:15:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 405,\n    \"statusText\": \"Method Not Allowed\",\n    \"data\": \"\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create session",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "subscriptionkey",
+						"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"james bond\",\r\n    \"email\": \"james.bond@cia.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/session/S202213061133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"S202213061133"
+					]
+				},
+				"description": "Create new key.\n\nUpdate key, if already exist."
+			},
+			"response": [
+				{
+					"name": "Create session",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "subscriptionkey",
+								"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"james bond\",\r\n    \"email\": \"james.bond@cia.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/session/S202213061133",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"session",
+								"S202213061133"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "47"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:15:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 201,\n    \"statusText\": \"Created\",\n    \"data\": \"\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "subscriptionkey",
+						"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"james bond 007\",\r\n    \"email\": \"james.bond@cia.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/session/S202213061133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"S202213061133"
+					]
+				},
+				"description": "Update existing key.\n\nCreate new key, if key doesn't exist."
+			},
+			"response": [
+				{
+					"name": "Update session",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "subscriptionkey",
+								"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"james bond 007\",\r\n    \"email\": \"james.bond@cia.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/session/S202213061133",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"session",
+								"S202213061133"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "47"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:16:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 201,\n    \"statusText\": \"Created\",\n    \"data\": \"\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Read session",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "subscriptionkey",
+						"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/session/S202213061133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"S202213061133"
+					]
+				},
+				"description": "Get value for specific key."
+			},
+			"response": [
+				{
+					"name": "Read session",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "subscriptionkey",
+								"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/session/S202213061133",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"session",
+								"S202213061133"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "64"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:17:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 404,\n    \"statusText\": \"Not Found\",\n    \"data\": \"Key not found\\n\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete session",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "subscriptionkey",
+						"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/session/S202213061133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"session",
+						"S202213061133"
+					]
+				},
+				"description": "Delete key."
+			},
+			"response": [
+				{
+					"name": "Delete session",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "subscriptionkey",
+								"value": "aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/session/S202213061133",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"session",
+								"S202213061133"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "content-length",
+							"value": "42"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 13 Jun 2022 11:16:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"statusText\": \"OK\",\n    \"data\": \"\"\n}"
+				}
+			]
+		}
+	]
+}

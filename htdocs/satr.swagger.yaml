@@ -1,0 +1,326 @@
+openapi: 3.0.0
+info:
+  title: Satr
+  description: >-
+    It is REST based API to manage session in KV-Store DB like Badger, BoltDB &
+    SkyTable.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /subscribe/trial3:
+    post:
+      tags:
+        - default
+      summary: Subscribe
+      description: Create a new bucket.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                expiry: '2023-12-31'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==
+      responses:
+        '201':
+          description: Created
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '156'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:15:15 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 201
+                statusText: Created
+                subscriptionKey: >-
+                  aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==
+                data: ''
+  /unsubscribe/trial3:
+    delete:
+      tags:
+        - default
+      summary: Unsubscribe
+      description: |-
+        Delete a bucket.
+
+        _**Note**: It is not available for Badger DB_.
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer am9obmRvZXwwMGU1ZmNmMmExN2ZhMTc3NDk3NGMyMDE5Y2RmZGNmOQ==
+      responses:
+        '405':
+          description: Method Not Allowed
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '58'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:15:30 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 405
+                statusText: Method Not Allowed
+                data: ''
+  /session/S202213061133:
+    post:
+      tags:
+        - default
+      summary: Create session
+      description: |-
+        Create new key.
+
+        Update key, if already exist.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: james bond
+                email: james.bond@cia.com
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: subscriptionkey
+          in: header
+          schema:
+            type: string
+          example: >-
+            aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==
+      responses:
+        '201':
+          description: Created
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '47'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:15:50 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 201
+                statusText: Created
+                data: ''
+    put:
+      tags:
+        - default
+      summary: Update session
+      description: |-
+        Update existing key.
+
+        Create new key, if key doesn't exist.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: james bond 007
+                email: james.bond@cia.com
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: subscriptionkey
+          in: header
+          schema:
+            type: string
+          example: >-
+            aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==
+      responses:
+        '201':
+          description: Created
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '47'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:16:15 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 201
+                statusText: Created
+                data: ''
+    get:
+      tags:
+        - default
+      summary: Read session
+      description: Get value for specific key.
+      parameters:
+        - name: subscriptionkey
+          in: header
+          schema:
+            type: string
+          example: >-
+            aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==
+      responses:
+        '404':
+          description: Not Found
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '64'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:17:03 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 404
+                statusText: Not Found
+                data: |
+                  Key not found
+    delete:
+      tags:
+        - default
+      summary: Delete session
+      description: Delete key.
+      parameters:
+        - name: subscriptionkey
+          in: header
+          schema:
+            type: string
+          example: >-
+            aZEQG0Hr8RML2nz8OdZRu2leBDjywvP7CBW6kpU6C2gmOfrLolLgONteNG9OX0DlsJE5fcPWcvMg6/VQH3MjZg==
+      responses:
+        '200':
+          description: OK
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            content-length:
+              schema:
+                type: integer
+                example: '42'
+            Date:
+              schema:
+                type: string
+                example: Mon, 13 Jun 2022 11:16:29 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: 200
+                statusText: OK
+                data: ''
+
