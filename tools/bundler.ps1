@@ -1,9 +1,11 @@
 $rootDir = Split-Path $PSScriptRoot -Parent
-$distDir = Resolve-Path -Path "$rootDir\dist"
+$distDir = Join-Path -Path $rootDir -ChildPath "dist"
 if (Test-Path $distDir) {
   Remove-Item -Path $distDir -Recurse -Force
 }
-$toolDir = Resolve-Path -Path "$rootDir\tools"
-& ncc build $rootDir\index.js -o $distDir -C
-Copy-Item -Path $toolDir -Destination $distDir\tools\ -Recurse -Exclude @("bundler.ps1", "packup.ps1")
-Copy-Item -Path $rootDir\config.json -Destination $distDir
+$indexFile = Join-Path -Path $rootDir -ChildPath "index.js"
+& ncc build $indexFile -o $distDir -C
+$toolDir = Join-Path -Path $rootDir -ChildPath "tools"
+Copy-Item -Path $toolDir -Destination $distDir -Recurse -Exclude @("bundler.ps1", "packup.ps1")
+$configFile = Join-Path -Path $rootDir -ChildPath "config.json"
+Copy-Item -Path $configFile -Destination $distDir
