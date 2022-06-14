@@ -21,6 +21,12 @@ You can install it at your system via npm
 
     npm install satr-api
 
+## Usage
+
+- [OpenAPI Specification](https://isurfer21.github.io/satr/htdocs/satr.oas3.html)
+- [Swagger](https://isurfer21.github.io/satr/htdocs/satr.swagger.yaml)
+- [Postman Collection](https://isurfer21.github.io/satr/htdocs/satr.postman_collection.json)
+
 ## Compatibility
 
 It is targetted to be compatible with KV Stores like Badger, BoltDB & SkyTable.
@@ -30,9 +36,3 @@ It is targetted to be compatible with KV Stores like Badger, BoltDB & SkyTable.
 | Badger   | VxDB        | ✓      |
 | BoltDB   | BBolt API   | ✓      |
 | SkyTable | SkyTable.js | ✗      |
-
-## Resources
-
-- [OpenAPI Specification](https://isurfer21.github.io/satr/htdocs/satr.oas3.html)
-- [Swagger](https://isurfer21.github.io/satr/htdocs/satr.swagger.yaml)
-- [Postman Collection](https://isurfer21.github.io/satr/htdocs/satr.postman_collection.json)

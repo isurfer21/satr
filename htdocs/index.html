@@ -8,43 +8,59 @@
     <link rel="stylesheet" href="https://vanillacss.com/vanilla.css">
 </head>
 
-<body class="typography">
-    <h1>Satr</h1>
-    <p><strong>Satr</strong> is a generic REST API for session storage. It is a ready-made solution for session management in your project.</p>
-    <h3>Compatibility</h3>
+<body>
+    <h1 id="satr-session-storage-api">Satr - Session Storage API</h1>
+    <p><a href="#">Satr</a> is a generic REST API for session storage. It is a ready-made solution for session management in your project.</p>
+    <h2 id="prerequisite">Prerequisite</h2>
+    <p>You should have these applications installed at your system.</p>
+    <ul>
+        <li><a href="https://nodejs.org/">node.js</a></li>
+        <li><code>npm</code> (usually it comes along with <code>node.js</code>)</li>
+    </ul>
+    <p>Along with the DB you want to use behind the scene</p>
+    <ul>
+        <li><a href="https://github.com/isurfer21/vxdb">VxDB</a></li>
+        <li><a href="https://github.com/hooksie1/bbolt-api">BBolt API</a></li>
+        <li><a href="https://github.com/isurfer21/skytable.js">SkyTable.js</a></li>
+    </ul>
+    <h2 id="setup">Setup</h2>
+    <p>You can install it at your system via npm</p>
+    <pre><code>npm install satr-api
+</code></pre>
+    <h2 id="usage">Usage</h2>
+    <ul>
+        <li><a href="satr.oas3.html">OpenAPI Specification</a></li>
+        <li><a href="satr.swagger.yaml">Swagger</a></li>
+        <li><a href="satr.postman_collection.json">Postman Collection</a></li>
+    </ul>
+    <h2 id="compatibility">Compatibility</h2>
     <p>It is targetted to be compatible with KV Stores like Badger, BoltDB &amp; SkyTable.</p>
-    <table summary="Satr compatibility with KV Store">
+    <table>
         <thead>
             <tr>
-                <th scope="col">Database</th>
-                <th scope="col">Dependency</th>
-                <th scope="col">Status</th>
+                <th>Database</th>
+                <th>Dependency</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Badger</td>
                 <td>VxDB</td>
-                <td>&#x2713;</td>
+                <td>✓</td>
             </tr>
             <tr>
                 <td>BoltDB</td>
                 <td>BBolt API</td>
-                <td>&#x2713;</td>
+                <td>✓</td>
             </tr>
             <tr>
                 <td>SkyTable</td>
                 <td>SkyTable.js</td>
-                <td>&#x2717;</td>
+                <td>✗</td>
             </tr>
         </tbody>
     </table>
-    <h3>Resources</h3>
-    <ul>
-        <li><a href="satr.oas3.html">OpenAPI Specification</a></li>
-        <li><a href="satr.swagger.yaml">Swagger</a></li>
-        <li><a href="satr.postman_collection.json">Postman Collection</a></li>
-    </ul>
 </body>
 
 </html>
