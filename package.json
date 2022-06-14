@@ -28,6 +28,9 @@
     "@vercel/ncc": "0.33.3",
     "pkg": "5.5.2"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "pkg": {
     "scripts": "index.js",
     "assets": [],
