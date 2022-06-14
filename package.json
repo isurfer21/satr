@@ -1,5 +1,5 @@
 {
-  "name": "satr",
+  "name": "satr-api",
   "version": "1.0.0",
   "description": "Generic REST API for session storage",
   "main": "index.js",
@@ -27,9 +27,6 @@
   "peerDependencies": {
     "@vercel/ncc": "0.33.3",
     "pkg": "5.5.2"
-  },
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
   },
   "pkg": {
     "scripts": "index.js",
