@@ -1,6 +1,6 @@
 {
   "name": "satr-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generic REST API for session storage",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,9 @@
   "dependencies": {
     "@fastify/static": "^5.0.2",
     "axios": "^0.27.2",
-    "fastify": "^3.29.0",
+    "fastify": "^3.29.0"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.16"
   },
   "peerDependencies": {
@@ -37,6 +39,6 @@
     "outputPath": "bin"
   },
   "bin": {
-    "satr": "index.js"
+    "satr-api": "index.js"
   }
 }
